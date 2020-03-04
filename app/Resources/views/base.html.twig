@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% for msg in app.session.flashBag.get('error') %}
+            <div class="alert alert-success">
+                {{ msg }}
+            </div>
+        {% endfor %}
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ msg }}
+            </div>
+        {% endfor %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

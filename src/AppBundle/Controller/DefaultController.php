@@ -1,65 +1,59 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use AppBundle\Entity\IP;
-use AppBundle\Form\IP as FormIp;
-use AppBundle\Form\IPSearch as FormIpSearch;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Response;
+
+use AppBundle\Entity\{IP as IPEntity, Ips};
+use AppBundle\Service\IpStorage as IpStorage;
+use AppBundle\Form\{IpCreate, IPSearch as FormIpSearch};
 
 
 class DefaultController extends Controller
 {
-    public function indexAction(Request $request, ValidatorInterface $validator)
+    public function indexAction(Request $request, IpStorage $ip_service)
     {
         // replace this example code with whatever you need
 
-        $createForm = $this->createForm(FormIp::class, new IP(), [
-            'action' => $this->generateUrl('ip.save'),
+        $searchEntity = new IPEntity();
+        $searchForm = $this->createForm(FormIpSearch::class, $searchEntity);
+        $searchForm->handleRequest($request);
+
+        $ips = new Ips();
+        $createEntity = new IPEntity();
+        
+        for ($i=0; $i<3; $i++) {
+            $ips->getIps()->add(new IPEntity());
+        }
+        $createForm = $this->createForm(IpCreate::class, $ips, [
             'method' => 'POST',
         ]);
-
-        $searchForm = $this->createForm(FormIpSearch::class, new IP());
-        $searchForm->handleRequest($request);
+        $createForm->handleRequest($request);
 
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            $task = $searchForm->getData();
-            dump($task);
+            // $query = $searchForm->getData();
+            $result = $ip_service->query($searchEntity->getIp());
+            if ($result) {
+                $this->addFlash('success', "Ip ".$searchEntity->getIp()." was found, number of adding = " . $result);
+            } else {
+                $this->addFlash('warning', "Ip ".$searchEntity->getIp()." NOT found");
+            }
+        }
+
+        if ($createForm->isSubmitted() && $createForm->isValid()) {
+            $list = $createForm->getData();
+            foreach($list->getIps() as $ip) {
+                $count = $ip_service->add($ip->getIp());
+                $this->addFlash('success', "Ip was added, count = " . $count);
+            }
         }
 
         return $this->render('default/index.html.twig', [
-            'createForm' => $createForm->createView(),
             'searchForm' => $searchForm->createView(),
+            'createForm' => $createForm->createView(),
         ]);
-    }
-
-    public function saveAction(Request $request, ValidatorInterface $validator)
-    {
-        $ip = new IP();
-        $form = $this->createForm(FormIp::class, $ip);
-
-        $form->handleRequest($request);
-        $errors = $validator->validate($ip);
-
-        if ($form->isSubmitted()) {
-            if (count($errors) > 0) {
-                foreach($errors as $error) {
-                    $this->addFlash('error', $error->getMessage());
-                }
-            }
-            $count = 1;
-            $ip->setCounter(0);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($ip);
-            $entityManager->flush();
-            $this->addFlash('success', "Ip was added, count" . $count);
-        }
-        return $this->redirectToRoute('ip.search');
-
     }
 }

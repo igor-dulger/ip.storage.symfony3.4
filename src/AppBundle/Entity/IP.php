@@ -1,18 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Entity;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use AppBundle\Validator\Constraints\IpAddress;
+use AppBundle\Validator\Constraints\IpAddress as IpAddress;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * IP
- *
+ * @ORM\Entity
  * @ORM\Table(name="ip")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\IPRepository")
  */
 class IP
 {
@@ -29,6 +28,7 @@ class IP
      * @var string
      *
      * @ORM\Column(name="ip", type="string", length=15, unique=true)
+     * @Assert\NotBlank()
      */
     private $ip;
     
@@ -50,7 +50,7 @@ class IP
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -62,7 +62,7 @@ class IP
      *
      * @return IP
      */
-    public function setIp($ip)
+    public function setIp(string $ip): IP
     {
         $this->ip = $ip;
 
@@ -74,7 +74,7 @@ class IP
      *
      * @return string
      */
-    public function getIp()
+    public function getIp(): ?string
     {
         return $this->ip;
     }
@@ -86,7 +86,7 @@ class IP
      *
      * @return IP
      */
-    public function setCounter($counter)
+    public function setCounter(int $counter): IP
     {
         $this->counter = $counter;
 
@@ -98,7 +98,7 @@ class IP
      *
      * @return int
      */
-    public function getCounter()
+    public function getCounter(): ?int
     {
         return $this->counter;
     }

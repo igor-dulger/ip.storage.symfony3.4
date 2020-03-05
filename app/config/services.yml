@@ -2,6 +2,8 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     #parameter_name: value
+    memchachedServer: 127.0.0.1
+    memchachedPort: 11211
 
 services:
     # default configuration for services in *this* file
@@ -30,6 +32,15 @@ services:
         tags: ['controller.service_arguments']
 
     # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+
+    AppBundle\Repository\IpSqlRepository: ~
+    AppBundle\Service\MemcachedLockFactory:
+        arguments:
+            $server: '%memchachedServer%'
+            $port: '%memchachedPort%'
+
+    AppBundle\Service\IpStorage:
+        arguments:
+            $repository: '@AppBundle\Repository\IpSqlRepository'
+            $lockFactoryCreator: '@AppBundle\Service\MemcachedLockFactory'
+

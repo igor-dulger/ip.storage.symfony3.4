@@ -1,12 +1,13 @@
 <?php
-namespace App\Validator\Constraints;
+namespace AppBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
 /**
  * @Annotation
  */
-class ContainsAlphanumeric extends Constraint
+
+class IpAddress extends Constraint
 {
-    public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+    public $message = 'Invalid ip address.';
 }

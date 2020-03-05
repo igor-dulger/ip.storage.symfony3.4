@@ -2,7 +2,6 @@ ip.search:
     path: /
     controller: 'AppBundle\Controller\DefaultController::indexAction'
 
-ip.save:
-    path: /save
-    methods: [POST, PUT]
-    controller: 'AppBundle\Controller\DefaultController::saveAction'
+ip.new:
+    path: /new
+    controller: 'AppBundle\Controller\DefaultController::newAction'

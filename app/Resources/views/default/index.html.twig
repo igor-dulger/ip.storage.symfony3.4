@@ -1,14 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ form_start(createForm) }}
-{{ form_widget(createForm) }}
-{{ form_end(createForm) }}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        {{ form_start(searchForm) }}
+        {{ form_widget(searchForm) }}
+        {{ form_end(searchForm) }}
 
-{{ form_start(searchForm) }}
-{{ form_widget(searchForm) }}
-{{ form_end(searchForm) }}
-
+        {{ form_start(createForm) }}
+        {{ form_errors(createForm) }}
+            {% for ip in createForm.ips %}
+            <div class="{% if not ip.vars.valid %}has-error{% endif %}">
+                {{ form_row(ip.ip) }}
+                <div class="col-sm-offset-2">
+                    {{ form_errors(ip) }}
+                </div>        
+            {% endfor %}
+            {{ form_row(createForm.save, { 'attr': { 'class': 'btn btn-success' } }) }}
+        {{ form_end(createForm) }}
+    </div>
+    <div class="col-md-3"></div>
+</div>
 {% endblock %}
 
 {% block stylesheets %}

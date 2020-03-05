@@ -5,13 +5,15 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
     </head>
     <body>
-        {% for msg in app.session.flashBag.get('error') %}
-            <div class="alert alert-success">
+        {% for msg in app.session.flashBag.get('warning') %}
+            <div class="alert alert-warning">
                 {{ msg }}
             </div>
         {% endfor %}
+
         {% for msg in app.session.flashBag.get('success') %}
             <div class="alert alert-success">
                 {{ msg }}

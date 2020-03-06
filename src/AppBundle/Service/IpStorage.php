@@ -20,18 +20,21 @@ class IpStorage {
         $lock = $this->lockFactory->createLock('ip-storage-add-'.$ip);
 
         if ($lock->acquire()) {
-            $entity = $this->repository->query($ip);
+            try {
+                $entity = $this->repository->query($ip);
         
-            if ($entity === null) {
-                $entity = new IpEntity();
-                $entity->setIp($ip);
-                $entity->setCounter(0);
-            }
-    
-            $entity->setCounter(1 + $entity->getCounter() ?? 0);
-            $this->repository->save($entity);
+                if ($entity === null) {
+                    $entity = new IpEntity();
+                    $entity->setIp($ip);
+                    $entity->setCounter(0);
+                }
+        
+                $entity->setCounter(1 + $entity->getCounter() ?? 0);
+                $this->repository->save($entity);
 
-            $lock->release();
+            } finally {
+                $lock->release();
+            }
             return $entity->getCounter();
         }
         return 0;

@@ -14,7 +14,7 @@ Service/IpStorage
 
 ### Comments
 
-Classes wasn't documented, due to lack of time. In real projects it is MUST activity.
+Classes weren't documented, due to lack of time. In real projects it is MUST activity.
 
 ### DB
 

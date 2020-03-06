@@ -20,6 +20,6 @@ Service/IpStorage
     `counter` bigint(20) NOT NULL DEFAULT '0'
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-    MALTER TABLE `ip`
+    ALTER TABLE `ip`
     ADD PRIMARY KEY (`id`),
     ADD KEY `ip` (`ip`);

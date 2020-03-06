@@ -15,11 +15,10 @@ Service/IpStorage
 ### DB
 
     CREATE TABLE `ip` (
-    `id` int(11) NOT NULL,
+    `id` int(11) NOT NULL AUTO_INCREMENT,
     `ip` varchar(15) NOT NULL,
-    `counter` bigint(20) NOT NULL DEFAULT '0'
+    `counter` bigint(20) NOT NULL DEFAULT '0',
+     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-    ALTER TABLE `ip`
-    ADD PRIMARY KEY (`id`),
-    ADD KEY `ip` (`ip`);
+    ALTER TABLE `ip` ADD KEY `ip` (`ip`);

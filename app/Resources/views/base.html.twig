@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
     </head>
     <body>
+        <div class="container">
         {% for msg in app.session.flashBag.get('warning') %}
             <div class="alert alert-warning">
                 {{ msg }}
@@ -19,7 +20,9 @@
                 {{ msg }}
             </div>
         {% endfor %}
+
         {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

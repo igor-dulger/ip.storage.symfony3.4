@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 use AppBundle\Entity\{IP as IPEntity, Ips};
 use AppBundle\Service\IpStorage as IpStorage;
@@ -15,8 +14,6 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request, IpStorage $ip_service)
     {
-        // replace this example code with whatever you need
-
         $searchEntity = new IPEntity();
         $searchForm = $this->createForm(FormIpSearch::class, $searchEntity);
         $searchForm->handleRequest($request);

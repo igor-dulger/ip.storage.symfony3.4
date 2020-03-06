@@ -5,7 +5,7 @@ namespace AppBundle\Service;
 use Symfony\Component\Lock\Store\MemcachedStore;
 use Symfony\Component\Lock\Factory as LockFactory;
 
-final class MemcachedLockFactory implements LockFactoryCreatorInterface {
+class MemcachedLockFactory implements LockFactoryCreatorInterface {
     
     private $server;
     private $port;

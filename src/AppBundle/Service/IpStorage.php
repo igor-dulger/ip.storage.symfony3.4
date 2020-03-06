@@ -32,9 +32,9 @@ class IpStorage {
             $this->repository->save($entity);
 
             $lock->release();
-        }        
-
-        return $entity->getCounter();
+            return $entity->getCounter();
+        }
+        return 0;
     }
 
     public function query(string $ip): int 

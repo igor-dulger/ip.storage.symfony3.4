@@ -14,6 +14,9 @@ use AppBundle\Repository\IpDriverInterface;
  */
 class IpSqlRepository implements IpDriverInterface
 {
+    protected $em;
+    protected $repository;
+    
     public function __construct(EntityManagerInterface $em) 
     {
         $this->em = $em;

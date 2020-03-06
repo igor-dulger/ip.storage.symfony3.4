@@ -1,7 +1,3 @@
 ip.search:
     path: /
     controller: 'AppBundle\Controller\DefaultController::indexAction'
-
-ip.new:
-    path: /new
-    controller: 'AppBundle\Controller\DefaultController::newAction'

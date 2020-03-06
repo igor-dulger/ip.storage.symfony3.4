@@ -12,6 +12,10 @@ Naming convention is a bit messy, but I decided not to change to save time(app i
 Repository/IpSqlRepository
 Service/IpStorage
 
+### Comments
+
+Classes wasn't documented, due to lack of time. In real projects it is MUST activity.
+
 ### DB
 
     CREATE TABLE `ip` (
